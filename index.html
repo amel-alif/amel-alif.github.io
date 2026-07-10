@@ -1,60 +1,802 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bientôt disponible 💗</title>
+  <title>Happy Birthday 💗</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
     :root {
-      --rose: #e9547a;
-      --rose-fonce: #b01e4f; 
-      --creme: #fff5f7;
+      --framboise: #b01e4f;
+      --rose:      #e9547a;
+      --rose-soft: #ff8fb6;
+      --cream:     #fff5f7;
+      --bg1:       #ffe3ee;
+      --bg2:       #ffc6dc;
+      --ink:       #8a133b;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
     body {
-      font-family: "Segoe UI", system-ui, sans-serif;
-      background: var(--creme);
-      color: var(--rose-fonce);
+      font-family: "Press Start 2P", ui-monospace, monospace;
+      color: var(--framboise);
+      background:
+        radial-gradient(circle at 50% 0%, var(--bg1), var(--bg2));
+      min-height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
+      padding: 16px;
+      -webkit-font-smoothing: none;
+    }
+    svg { image-rendering: pixelated; fill: currentColor; }
+
+    /* --- Cadre pixel rétro (même esprit que le QR) --- */
+    .frame {
+      position: relative;
+      width: min(760px, 96vw);
+      padding: clamp(20px, 5vw, 44px);
+      background: var(--cream);
+      border: 8px solid var(--framboise);
+      box-shadow:
+        0 0 0 8px var(--rose),
+        0 0 0 16px var(--framboise),
+        0 14px 0 16px rgba(138,19,59,.25);
       text-align: center;
-      min-height: 100vh;
-      padding: 24px;
+      overflow: visible;
     }
-    .coeur {
-      font-size: 72px;
-      line-height: 1;
-      animation: battement 1.4s ease-in-out infinite;
+    /* petits carrés de coin façon 8-bit */
+    .frame::before, .frame::after {
+      content: "";
+      position: absolute; width: 16px; height: 16px;
+      background: var(--cream);
+      top: -8px;
     }
-    @keyframes battement {
-      0%, 100% { transform: scale(1); }
-      50%      { transform: scale(1.15); }
+    .frame::before { left: -8px; }
+    .frame::after  { right: -8px; }
+
+    /* --- Cœur central 8-bit qui bat --- */
+    .bigheart {
+      width: clamp(84px, 22vw, 130px);
+      color: var(--rose);
+      margin: 4px auto 18px;
+      display: block;
+      animation: heartbeat 1.3s ease-in-out infinite;
+      filter: drop-shadow(4px 4px 0 var(--framboise));
     }
+    @keyframes heartbeat {
+      0%,100% { transform: scale(1); }
+      15%     { transform: scale(1.18); }
+      30%     { transform: scale(1.02); }
+      45%     { transform: scale(1.12); }
+    }
+
+    /* --- Titre --- */
     h1 {
-      font-size: clamp(28px, 6vw, 48px);
-      margin: 24px 0 12px;
+      font-size: clamp(20px, 6.4vw, 40px);
+      line-height: 1.5;
+      color: var(--framboise);
+      text-shadow:
+        3px 3px 0 var(--rose-soft),
+        6px 6px 0 var(--rose);
+      letter-spacing: 1px;
+      margin-bottom: 22px;
+    }
+    h1 .l2 { color: var(--rose); text-shadow: 3px 3px 0 var(--framboise); }
+
+    .name {
+      font-size: clamp(18px, 5.4vw, 30px);
+      color: var(--rose);
+      text-shadow: 2px 2px 0 var(--framboise);
+      margin-bottom: 26px;
+      line-height: 1.5;
+      letter-spacing: 2px;
+    }
+    .name .who { color: var(--rose); }
+
+    .hearts-row { margin-bottom: 20px; }
+    .hearts-row svg { width: 22px; color: var(--rose); margin: 0 6px; vertical-align: middle; }
+    .hearts-row svg:nth-child(2) { color: var(--framboise); }
+
+    /* --- Illustrations pixel-art du couple --- */
+    .couple {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: clamp(10px, 5vw, 30px);
+      margin: 6px auto 26px;
+    }
+    .couple .fig {
+      width: clamp(62px, 19vw, 92px);
+      height: auto; display: block;
+      image-rendering: pixelated;
+      filter: drop-shadow(3px 3px 0 rgba(138,19,59,.20));
+    }
+    .couple .mid {
+      width: clamp(20px, 7vw, 32px);
+      color: var(--rose);
+      align-self: center;
+      animation: heartbeat 1.3s ease-in-out infinite;
+    }
+    .couple .label {
+      font-size: clamp(7px, 2vw, 10px);
+      color: var(--framboise);
+      margin-top: 8px;
       letter-spacing: 1px;
     }
-    p {
-      font-size: clamp(16px, 3vw, 20px);
-      max-width: 480px;
-      color: #a04;
-      opacity: 0.85;
+
+    /* --- Bouton tactile "click here" --- */
+    .cta {
+      font-family: inherit;
+      font-size: clamp(9px, 2.6vw, 13px);
+      color: var(--cream);
+      background: var(--rose);
+      border: 4px solid var(--framboise);
+      box-shadow: 4px 4px 0 var(--framboise);
+      padding: 14px 20px;
+      cursor: pointer;
+      letter-spacing: 1px;
+      -webkit-tap-highlight-color: transparent;
+      animation: pulse 1.4s ease-in-out infinite;
     }
-    footer {
-      margin-top: 40px;
-      font-size: 13px;
-      opacity: 0.6;
+    .cta:hover { background: var(--framboise); }
+    .cta:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--framboise); }
+    @keyframes pulse {
+      0%,100% { transform: scale(1); }
+      50%     { transform: scale(1.06); }
+    }
+
+    /* --- Cœurs flottants en fond --- */
+    .float { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: -1; }
+    .float svg { position: absolute; bottom: -40px; opacity: .55; animation: floatup linear infinite; }
+    @keyframes floatup {
+      to { transform: translateY(-115vh) rotate(20deg); opacity: 0; }
+    }
+
+    /* --- Scène de la lettre (overlay plein écran) --- */
+    .scene {
+      position: fixed; inset: 0; z-index: 50;
+      display: flex; align-items: center; justify-content: center;
+      background: radial-gradient(circle at 50% 20%,
+        rgba(255,227,238,.97), rgba(255,198,220,.97));
+      opacity: 0; transition: opacity .35s;
+    }
+    .scene[hidden] { display: none; }
+    .scene.on { opacity: 1; }
+    .scene-float { z-index: 0; }
+    .env {
+      position: relative; z-index: 1;
+      width: clamp(190px, 62vw, 280px);
+      image-rendering: pixelated;
+      filter: drop-shadow(5px 6px 0 rgba(138,19,59,.25));
+    }
+    @keyframes flyin {
+      0%   { transform: translateY(110vh) rotate(-12deg); }
+      70%  { transform: translateY(-3vh) rotate(4deg); }
+      85%  { transform: translateY(1.5vh) rotate(-2deg); }
+      100% { transform: translateY(0) rotate(0); }
+    }
+    .env.fly { animation: flyin .95s steps(20, end) both; }
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(0); }
+      25% { transform: rotate(-5deg); }
+      50% { transform: rotate(4deg); }
+      75% { transform: rotate(-3deg); }
+    }
+    .env.wiggle { animation: wiggle .45s steps(8, end) 2; }
+    @keyframes pop { 50% { transform: scale(1.12); } }
+    .env.pop { animation: pop .3s steps(6, end); }
+    .env.sink {
+      transition: transform .6s, opacity .6s;
+      transform: translateY(26vh) scale(.85);
+      opacity: 0;
+    }
+    .letter {
+      position: absolute; left: 50%; top: 50%; z-index: 2;
+      transform: translate(-50%, -50%) rotate(-1.2deg);
+      width: min(380px, 90vw);
+      max-height: 80vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      background:                             /* papier ligné */
+        repeating-linear-gradient(to bottom,
+          transparent 0 21px, rgba(233, 84, 122, .18) 21px 22px),
+        var(--cream);
+      border: 6px solid var(--framboise);
+      box-shadow: 0 0 0 6px var(--rose), 8px 10px 0 6px rgba(138,19,59,.22);
+      padding: 30px 18px 24px 34px;
+      text-align: left;
+    }
+    .letter::before {                         /* marge verticale du cahier */
+      content: ""; position: absolute; top: 0; bottom: 0; left: 22px;
+      width: 2px; background: rgba(233, 84, 122, .35);
+    }
+    .stamp {                                  /* timbre cœur */
+      position: absolute; top: 10px; right: 10px;
+      width: 32px; padding: 5px 4px 3px;
+      border: 3px dashed var(--rose);
+      background: #fff;
+      color: var(--rose);
+      transform: rotate(3deg);
+    }
+    .stamp svg { width: 100%; height: auto; display: block; }
+    @keyframes rise {
+      0%   { transform: translate(-50%, calc(-50% + 36vh)) scale(.2) rotate(8deg); opacity: 0; }
+      60%  { transform: translate(-50%, calc(-50% - 2vh)) scale(1.05) rotate(-3deg); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1) rotate(-1.2deg); opacity: 1; }
+    }
+    .letter.rise { animation: rise .65s steps(16, end) both; }
+    .letter .dear {
+      font-size: clamp(11px, 3.2vw, 15px);
+      color: var(--framboise);
+      text-shadow: 2px 2px 0 var(--rose-soft);
+      margin: 0 40px 22px 0;
+    }
+    .letter .body-text {
+      font-size: clamp(7px, 2.2vw, 10px);
+      color: var(--ink); line-height: 2.2;
+      margin-bottom: 16px;
+    }
+    .letter .sign {
+      font-size: clamp(10px, 3vw, 13px);
+      color: var(--rose);
+      text-shadow: 1px 1px 0 var(--framboise);
+      text-align: right;
+      margin: 8px 6px 20px 0;
+    }
+    .letter .actions { text-align: center; }
+    .cta.small { font-size: clamp(8px, 2.2vw, 10px); padding: 10px 14px; animation: none; }
+
+    /* --- Sac à récompenses (haut droite, persistant) --- */
+    .bag {
+      position: fixed; top: 12px; right: 12px; z-index: 80;
+      width: 54px; transition: opacity .3s;
+    }
+    .bag[hidden] { display: none; }
+    .bag.ghost { opacity: 0; }
+    .bag img {
+      width: 100%; display: block; image-rendering: pixelated;
+      filter: drop-shadow(3px 3px 0 rgba(138,19,59,.25));
+    }
+    .bag-count {
+      position: absolute; right: -7px; bottom: -5px;
+      background: var(--framboise); color: var(--cream);
+      font-size: 10px; padding: 4px 6px;
+      border: 2px solid var(--cream);
+    }
+    @keyframes bagpop {
+      0% { transform: scale(.2); } 60% { transform: scale(1.3); } 100% { transform: scale(1); }
+    }
+    .bag.pop { animation: bagpop .45s steps(8, end); }
+
+    /* --- Écran quiz (aventure 1) --- */
+    .quiz {
+      position: fixed; inset: 0; z-index: 40;
+      display: flex; flex-direction: column; align-items: center;
+      padding: max(5vh, 24px) 18px 24px;
+      background: radial-gradient(circle at 50% 0%, var(--bg1), var(--bg2));
+      overflow-y: auto;
+      opacity: 0; transition: opacity .35s;
+    }
+    .quiz[hidden] { display: none; }
+    .quiz.on { opacity: 1; }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10% { transform: translateX(-12px); } 25% { transform: translateX(10px); }
+      40% { transform: translateX(-8px); } 55% { transform: translateX(6px); }
+      70% { transform: translateX(-4px); } 85% { transform: translateX(2px); }
+    }
+    .quiz.shake { animation: shake .5s steps(14, end); }
+    @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    .pastry {
+      width: clamp(230px, 70vw, 330px);
+      image-rendering: pixelated;
+      filter: drop-shadow(4px 4px 0 rgba(138,19,59,.2));
+      margin-bottom: 20px;
+      animation: bob 2.4s steps(6, end) infinite;
+    }
+    .question {
+      font-size: clamp(11px, 3.2vw, 16px);
+      color: var(--framboise);
+      text-shadow: 2px 2px 0 var(--rose-soft);
+      text-align: center; line-height: 1.9;
+      margin-bottom: 34px;
+    }
+    .answers { display: flex; flex-direction: column; gap: 42px; align-items: center; }
+    .answer-wrap { position: relative; }
+    .answer {
+      font-family: inherit;
+      font-size: clamp(11px, 3vw, 14px);
+      width: min(270px, 72vw);
+      padding: 16px 10px;
+      cursor: pointer; letter-spacing: 1px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .answer.good {
+      color: var(--cream); background: var(--rose);
+      border: 4px solid var(--framboise);
+      box-shadow: 4px 4px 0 var(--framboise);
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+    .answer.good:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--framboise); }
+    .answer.bad {
+      color: #efe4e8; background: #b3a0aa;
+      border: 4px solid #6f5b64;
+      box-shadow: 4px 4px 0 #6f5b64;
+    }
+    .answer.bad:active { transform: translate(2px, 2px); }
+    .hint-label {
+      position: absolute; top: -26px; right: -4px;
+      font-size: clamp(8px, 2.2vw, 10px);
+      color: var(--framboise);
+      transform: rotate(5deg);
+      animation: blink .9s steps(1) infinite;
+    }
+    .arr { position: absolute; top: 50%; width: 30px; color: var(--framboise); }
+    .arr-l { left: -42px; transform: translateY(-50%); animation: nudgeR .5s steps(3, end) infinite alternate; }
+    .arr-r { right: -42px; transform: translateY(-50%) scaleX(-1); animation: nudgeL .5s steps(3, end) infinite alternate; }
+    @keyframes nudgeR { to { left: -34px; } }
+    @keyframes nudgeL { to { right: -34px; } }
+    .hint-hearts {
+      position: absolute; bottom: -26px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; gap: 8px;
+    }
+    .hint-hearts svg { width: 14px; color: var(--rose); animation: heartbeat 1.3s ease-in-out infinite; }
+    .hint-hearts svg:nth-child(2) { color: var(--framboise); animation-delay: .2s; }
+    .hint-hearts svg:nth-child(3) { animation-delay: .4s; }
+    .xx { position: absolute; top: 50%; transform: translateY(-50%); width: 22px; color: #c02843; }
+    .x-l { left: -34px; } .x-r { right: -34px; }
+    .warn-label {
+      position: absolute; bottom: -22px; left: 50%;
+      transform: translateX(-50%) rotate(-2deg);
+      font-size: clamp(7px, 2vw, 9px);
+      color: #7c5f6a; white-space: nowrap;
+    }
+    .fail-banner {
+      position: fixed; top: 16%; left: 50%;
+      transform: translate(-50%, 0);
+      z-index: 45;
+      background: var(--framboise); color: var(--cream);
+      font-size: clamp(11px, 3.4vw, 16px);
+      padding: 16px 18px; text-align: center; line-height: 1.7;
+      border: 4px solid var(--cream);
+      box-shadow: 0 0 0 4px var(--framboise), 6px 8px 0 4px rgba(138,19,59,.3);
+      white-space: nowrap;
+    }
+    .fail-banner[hidden] { display: none; }
+    @keyframes slam {
+      0% { transform: translate(-50%, 0) scale(3); opacity: 0; }
+      60% { transform: translate(-50%, 0) scale(.92); opacity: 1; }
+      100% { transform: translate(-50%, 0) scale(1); }
+    }
+    .fail-banner.slam { animation: slam .3s steps(6, end) both; }
+    .stage-clear { text-align: center; margin-top: 12px; }
+    .stage-clear[hidden] { display: none; }
+    .clear-title {
+      font-size: clamp(16px, 5vw, 26px);
+      color: var(--framboise);
+      text-shadow: 3px 3px 0 var(--rose-soft);
+      margin-bottom: 18px;
+      animation: heartbeat 1.6s ease-in-out infinite;
+    }
+    .clear-sub { font-size: clamp(8px, 2.4vw, 11px); color: var(--ink); }
+
+    .quiz.next { justify-content: center; z-index: 42; gap: 8px; }
+    .stage-clear .cta { margin-top: 24px; }
+
+    /* --- Panneau du sac (consulter les cadeaux) --- */
+    .bag { cursor: pointer; }
+    .bag:active { transform: scale(.92); }
+    .bag-panel {
+      position: fixed; inset: 0; z-index: 85;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255, 198, 220, .88);
+      opacity: 0; transition: opacity .3s;
+    }
+    .bag-panel[hidden] { display: none; }
+    .bag-panel.on { opacity: 1; }
+    .bag-box {
+      background: var(--cream);
+      border: 6px solid var(--framboise);
+      box-shadow: 0 0 0 6px var(--rose), 8px 10px 0 6px rgba(138,19,59,.22);
+      padding: 26px 22px;
+      width: min(320px, 86vw);
+      max-height: 76vh; overflow-y: auto;
+      text-align: center;
+    }
+    .bag-title {
+      font-size: clamp(13px, 3.8vw, 18px);
+      color: var(--framboise);
+      text-shadow: 2px 2px 0 var(--rose-soft);
+      margin-bottom: 20px;
+    }
+    .bag-items { display: flex; flex-direction: column; gap: 14px; margin-bottom: 22px; }
+    .bag-item {
+      display: flex; align-items: center; gap: 14px;
+      background: #fff;
+      border: 3px solid var(--rose);
+      box-shadow: 3px 3px 0 var(--rose);
+      padding: 10px 12px;
+    }
+    .bag-item img { width: 44px; image-rendering: pixelated; }
+    .bag-item .nm {
+      font-size: clamp(8px, 2.4vw, 11px);
+      color: var(--framboise);
+      text-align: left; line-height: 1.9;
+    }
+    .bag-empty { font-size: clamp(8px, 2.4vw, 10px); color: var(--ink); margin-bottom: 20px; }
+
+    /* --- Overlay succès (récompense) --- */
+    .success {
+      position: fixed; inset: 0; z-index: 60;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 18px; text-align: center; padding: 20px;
+      background: radial-gradient(circle at 50% 30%,
+        rgba(255,227,238,.97), rgba(255,198,220,.97));
+      opacity: 0; transition: opacity .3s;
+    }
+    .success[hidden] { display: none; }
+    .success.on { opacity: 1; }
+    .grats1 {
+      font-size: clamp(24px, 8vw, 44px);
+      color: var(--framboise);
+      text-shadow: 3px 3px 0 var(--rose-soft), 6px 6px 0 var(--rose);
+      animation: heartbeat 1s ease-in-out infinite;
+    }
+    .grats2 { font-size: clamp(9px, 2.6vw, 12px); color: var(--ink); }
+    .reward-img {
+      width: clamp(110px, 34vw, 160px);
+      image-rendering: pixelated;
+      filter: drop-shadow(5px 6px 0 rgba(138,19,59,.25));
+      margin: 8px 0;
+      animation: rewardin .55s steps(12, end) both;
+    }
+    @keyframes rewardin {
+      0% { transform: scale(.1) rotate(-15deg); opacity: 0; }
+      70% { transform: scale(1.15) rotate(4deg); opacity: 1; }
+      100% { transform: scale(1) rotate(0); }
+    }
+    .reward-name { font-size: clamp(9px, 2.6vw, 12px); color: var(--framboise); line-height: 2; }
+    .fly-clone { pointer-events: none; }
+
+    @media (max-width: 380px) {
+      .frame { box-shadow: 0 0 0 6px var(--rose), 0 0 0 12px var(--framboise); }
     }
   </style>
 </head>
 <body>
-  <div class="coeur">💗</div>
-  <h1>Bientôt disponible</h1>
-  <p>Cette page arrive très vite. Reviens bientôt pour découvrir la surprise&nbsp;!</p>
-  <footer>Fait avec ❤︎</footer>
+  <!-- Définition réutilisable du cœur pixel-art (bitmap 9x9) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="pxheart" viewBox="0 0 9 9" shape-rendering="crispEdges">
+      <rect x="1" y="0" width="2" height="1"/><rect x="6" y="0" width="2" height="1"/>
+      <rect x="0" y="1" width="9" height="1"/>
+      <rect x="0" y="2" width="9" height="1"/>
+      <rect x="0" y="3" width="9" height="1"/>
+      <rect x="0" y="4" width="9" height="1"/>
+      <rect x="1" y="5" width="7" height="1"/>
+      <rect x="2" y="6" width="5" height="1"/>
+      <rect x="3" y="7" width="3" height="1"/>
+      <rect x="4" y="8" width="1" height="1"/>
+    </symbol>
+    <symbol id="pxarrow" viewBox="0 0 8 9" shape-rendering="crispEdges">
+      <rect x="0" y="3" width="4" height="3"/>
+      <rect x="4" y="1" width="1" height="7"/>
+      <rect x="5" y="2" width="1" height="5"/>
+      <rect x="6" y="3" width="1" height="3"/>
+      <rect x="7" y="4" width="1" height="1"/>
+    </symbol>
+    <symbol id="pxx" viewBox="0 0 7 7" shape-rendering="crispEdges">
+      <rect x="0" y="0" width="2" height="2"/><rect x="5" y="0" width="2" height="2"/>
+      <rect x="1" y="1" width="2" height="2"/><rect x="4" y="1" width="2" height="2"/>
+      <rect x="2" y="2" width="3" height="3"/>
+      <rect x="1" y="4" width="2" height="2"/><rect x="4" y="4" width="2" height="2"/>
+      <rect x="0" y="5" width="2" height="2"/><rect x="5" y="5" width="2" height="2"/>
+    </symbol>
+  </svg>
+
+  <div class="float" id="float"></div>
+
+  <div class="frame">
+    <svg class="bigheart"><use href="#pxheart"/></svg>
+
+    <h1>HAPPY<br><span class="l2">BIRTHDAY</span></h1>
+
+    <p class="name"><span class="who">MELE</span> &#9829;</p>
+
+    <div class="hearts-row">
+      <svg viewBox="0 0 9 9"><use href="#pxheart"/></svg>
+      <svg viewBox="0 0 9 9"><use href="#pxheart"/></svg>
+      <svg viewBox="0 0 9 9"><use href="#pxheart"/></svg>
+    </div>
+
+    <div class="couple">
+      <img class="fig" src="him.png?v=4" alt="pixel-art of us">
+      <svg class="mid" viewBox="0 0 9 9"><use href="#pxheart"/></svg>
+      <img class="fig" src="her.png?v=4" alt="pixel-art of us">
+    </div>
+
+    <button class="cta" id="cta">&#9829; click here &#9829;</button>
+  </div>
+
+  <!-- Scène de la lettre : enveloppe qui arrive puis s'ouvre -->
+  <div class="scene" id="scene" hidden>
+    <div class="float scene-float" id="sceneFloat"></div>
+    <img class="env" id="envImg" src="envelope_closed.png?v=1" alt="a letter for you">
+    <div class="letter" id="letter" hidden>
+      <div class="stamp"><svg viewBox="0 0 9 9"><use href="#pxheart"/></svg></div>
+      <p class="dear">Hello Mele!</p>
+      <p class="body-text">First of all, happy birthday! I hope this year brings you lots of happiness, great news, and success.</p>
+      <p class="body-text">It's an honor for me to talk with you. I've really enjoyed the time we've spent together, and I hope it continues.</p>
+      <p class="body-text">I wanted to get you a gift that's a bit more original, so here is an interactive website made especially for you! It's kind of like a game, you have tasks to complete, riddles to solve, and so on.</p>
+      <p class="body-text">Anyway, I hope you like it!</p>
+      <p class="sign">Amel &#9829;</p>
+      <div class="actions">
+        <button class="cta small" id="closeLetter">&#9829; let's go ! &#9829;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sac à récompenses (apparaît au 1er cadeau, persiste ensuite) -->
+  <div class="bag ghost" id="bag" hidden>
+    <img src="bag.png?v=1" alt="rewards bag">
+    <span class="bag-count" id="bagCount">0</span>
+  </div>
+
+  <!-- Aventure 1 : le quiz viennoiserie -->
+  <div class="quiz" id="quiz" hidden>
+    <img class="pastry" src="viennoiserie.png?v=2" alt="a delicious mystery">
+    <p class="question" id="question">What is that called in French?</p>
+    <div class="answers" id="answers">
+      <div class="answer-wrap">
+        <span class="hint-label">THIS ONE !!</span>
+        <svg class="arr arr-l" viewBox="0 0 8 9"><use href="#pxarrow"/></svg>
+        <button class="answer good" id="btnGood">Viennoiserie</button>
+        <svg class="arr arr-r" viewBox="0 0 8 9"><use href="#pxarrow"/></svg>
+        <span class="hint-hearts">
+          <svg viewBox="0 0 9 9"><use href="#pxheart"/></svg>
+          <svg viewBox="0 0 9 9"><use href="#pxheart"/></svg>
+          <svg viewBox="0 0 9 9"><use href="#pxheart"/></svg>
+        </span>
+      </div>
+      <div class="answer-wrap">
+        <svg class="xx x-l" viewBox="0 0 7 7"><use href="#pxx"/></svg>
+        <button class="answer bad" id="btnBad">Patisserie</button>
+        <svg class="xx x-r" viewBox="0 0 7 7"><use href="#pxx"/></svg>
+        <span class="warn-label">absolutely not.</span>
+      </div>
+    </div>
+    <div class="stage-clear" id="stageClear" hidden>
+      <p class="clear-title">STAGE 1 CLEAR !</p>
+      <p class="clear-sub">you did great. obviously &#9829;</p>
+      <button class="cta" id="continueBtn">&#9829; continue &#9829;</button>
+    </div>
+    <div class="fail-banner" id="failBanner" hidden></div>
+  </div>
+
+  <!-- Stage 2 : prochaine page (placeholder, à construire) -->
+  <div class="quiz next" id="stage2" hidden>
+    <p class="clear-title">STAGE 2</p>
+    <p class="clear-sub">under construction<span class="blink">_</span></p>
+  </div>
+
+  <!-- Panneau du sac : consulter les cadeaux gagnés -->
+  <div class="bag-panel" id="bagPanel" hidden>
+    <div class="bag-box">
+      <p class="bag-title">MY GIFTS &#9829;</p>
+      <div class="bag-items" id="bagItems"></div>
+      <button class="cta small" id="bagClose">&#9829; close &#9829;</button>
+    </div>
+  </div>
+
+  <!-- Overlay succès : la récompense -->
+  <div class="success" id="success" hidden>
+    <div class="float scene-float" id="successFloat"></div>
+    <p class="grats1">CORRECT !!</p>
+    <p class="grats2">of course it is. that's my girl &#9829;</p>
+    <img class="reward-img" id="rewardImg" src="passport.png?v=1" alt="French passport">
+    <p class="reward-name">reward unlocked:<br>FRENCH PASSPORT</p>
+    <button class="cta" id="claimBtn">&#9829; claim reward &#9829;</button>
+  </div>
+
+  <script>
+    // Cœurs pixel qui montent doucement en fond
+    const layer = document.getElementById('float');
+    const COLORS = ['#e9547a', '#b01e4f', '#ff8fb6'];
+    const SVGNS = 'http://www.w3.org/2000/svg';
+    function spawnHeart(target) {
+      const host = (target && target.nodeType === 1) ? target : layer;
+      const s = document.createElementNS(SVGNS, 'svg');
+      s.setAttribute('viewBox', '0 0 9 9');
+      const size = 14 + Math.random() * 26;
+      s.style.width = size + 'px';
+      s.style.left = Math.random() * 100 + 'vw';
+      s.style.color = COLORS[(Math.random() * COLORS.length) | 0];
+      s.style.animationDuration = (6 + Math.random() * 7) + 's';
+      const use = document.createElementNS(SVGNS, 'use');
+      use.setAttribute('href', '#pxheart');
+      s.appendChild(use);
+      host.appendChild(s);
+      setTimeout(() => s.remove(), 14000);
+    }
+    // rafale de bienvenue puis flux régulier
+    for (let i = 0; i < 12; i++) setTimeout(spawnHeart, i * 180);
+    setInterval(spawnHeart, 650);
+
+    // --- "click here" : l'enveloppe vole, atterrit, s'ouvre, la lettre sort ---
+    const scene = document.getElementById('scene');
+    const envImg = document.getElementById('envImg');
+    const letter = document.getElementById('letter');
+    const sceneFloat = document.getElementById('sceneFloat');
+    let letterTimers = [];
+
+    function openScene() {
+      letterTimers.forEach(clearTimeout);
+      letterTimers = [];
+      envImg.src = 'envelope_closed.png?v=1';
+      envImg.className = 'env';
+      letter.hidden = true;
+      letter.classList.remove('rise');
+      scene.hidden = false;
+      void scene.offsetWidth;                  // force le rendu initial (opacity 0)
+      scene.classList.add('on');
+      envImg.classList.add('fly');             // 1. l'enveloppe arrive
+      letterTimers.push(setTimeout(() => {
+        envImg.classList.add('wiggle');        // 2. elle frétille
+      }, 1050));
+      letterTimers.push(setTimeout(() => {
+        envImg.classList.remove('wiggle');
+        envImg.src = 'envelope_open.png?v=1';  // 3. le rabat s'ouvre
+        envImg.classList.add('pop');
+      }, 2000));
+      letterTimers.push(setTimeout(() => {
+        envImg.className = 'env sink';         // 4. la lettre sort
+        letter.hidden = false;
+        letter.classList.add('rise');
+        for (let i = 0; i < 18; i++) setTimeout(() => spawnHeart(sceneFloat), i * 60);
+      }, 2450));
+    }
+
+    document.getElementById('cta').addEventListener('click', openScene);
+
+    // --- "let's go !" : on quitte la lettre, l'aventure commence ---
+    const quiz = document.getElementById('quiz');
+    document.getElementById('closeLetter').addEventListener('click', () => {
+      letterTimers.forEach(clearTimeout);
+      letterTimers = [];
+      scene.classList.remove('on');
+      quiz.hidden = false;
+      void quiz.offsetWidth;
+      quiz.classList.add('on');
+      setTimeout(() => { scene.hidden = true; }, 380);
+    });
+
+    // --- Aventure 1 : quiz viennoiserie + sac à récompenses ---
+    const failBanner = document.getElementById('failBanner');
+    const successEl = document.getElementById('success');
+    const successFloat = document.getElementById('successFloat');
+    const bag = document.getElementById('bag');
+    const bagCount = document.getElementById('bagCount');
+    const rewardImg = document.getElementById('rewardImg');
+    const rewards = JSON.parse(localStorage.getItem('mele-rewards') || '[]');
+    let failTO = null, failIdx = -1;
+
+    // catalogue des cadeaux (les prochaines aventures ajouteront les leurs)
+    const REWARD_DEFS = {
+      passport: { img: 'passport.png?v=1', name: 'French Passport' }
+    };
+
+    const FAIL_TEXTS = [
+      'Excuse me ??',
+      'NOOOO !!',
+      'What is WRONG with you ?!',
+      'The SHAME...',
+      'We need to talk.',
+      "I'm calling the police.",
+      'Try again. NOW.'
+    ];
+
+    function refreshBag(pop) {
+      if (rewards.length > 0) {
+        bag.hidden = false;
+        bag.classList.remove('ghost');
+        bagCount.textContent = rewards.length;
+        if (pop) {
+          bag.classList.remove('pop');
+          void bag.offsetWidth;
+          bag.classList.add('pop');
+        }
+      }
+    }
+    refreshBag(false);   // au chargement : restaure le sac si cadeaux déjà gagnés
+
+    document.getElementById('btnBad').addEventListener('click', () => {
+      quiz.classList.remove('shake');
+      void quiz.offsetWidth;
+      quiz.classList.add('shake');
+      failIdx = (failIdx + 1) % FAIL_TEXTS.length;   // textes en escalade
+      failBanner.textContent = FAIL_TEXTS[failIdx];
+      failBanner.hidden = false;
+      failBanner.classList.remove('slam');
+      void failBanner.offsetWidth;
+      failBanner.classList.add('slam');
+      clearTimeout(failTO);
+      failTO = setTimeout(() => { failBanner.hidden = true; }, 1600);
+    });
+
+    document.getElementById('btnGood').addEventListener('click', () => {
+      clearTimeout(failTO);
+      failBanner.hidden = true;
+      successEl.hidden = false;
+      void successEl.offsetWidth;
+      successEl.classList.add('on');
+      for (let i = 0; i < 20; i++) setTimeout(() => spawnHeart(successFloat), i * 70);
+    });
+
+    document.getElementById('claimBtn').addEventListener('click', () => {
+      if (!rewards.includes('passport')) {
+        rewards.push('passport');
+        localStorage.setItem('mele-rewards', JSON.stringify(rewards));
+      }
+      // le passeport s'envole vers le sac
+      bag.hidden = false;                    // rendu (encore invisible) pour viser sa position
+      const from = rewardImg.getBoundingClientRect();
+      const to = bag.getBoundingClientRect();
+      const clone = rewardImg.cloneNode();
+      clone.classList.add('fly-clone');
+      clone.style.cssText = 'position:fixed;z-index:90;image-rendering:pixelated;' +
+        'left:' + from.left + 'px;top:' + from.top + 'px;width:' + from.width + 'px;' +
+        'transition:transform .8s cubic-bezier(.45,-.25,.85,.55),opacity .8s;';
+      document.body.appendChild(clone);
+      const dx = (to.left + to.width / 2) - (from.left + from.width / 2);
+      const dy = (to.top + to.height / 2) - (from.top + from.height / 2);
+      void clone.offsetWidth;
+      clone.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(.15) rotate(25deg)';
+      clone.style.opacity = '.5';
+      successEl.classList.remove('on');
+      setTimeout(() => { successEl.hidden = true; }, 350);
+      // état "stage 1 terminé"
+      document.getElementById('answers').hidden = true;
+      document.getElementById('question').hidden = true;
+      document.getElementById('stageClear').hidden = false;
+      setTimeout(() => {
+        clone.remove();
+        refreshBag(true);                    // le sac apparaît avec un pop + compteur
+      }, 830);
+    });
+
+    // --- Consulter le sac des cadeaux ---
+    const bagPanel = document.getElementById('bagPanel');
+    const bagItems = document.getElementById('bagItems');
+    bag.addEventListener('click', () => {
+      bagItems.innerHTML = rewards.length
+        ? rewards.map(id => {
+            const d = REWARD_DEFS[id];
+            return d ? '<div class="bag-item"><img src="' + d.img +
+                       '" alt=""><span class="nm">' + d.name + '</span></div>' : '';
+          }).join('')
+        : '<p class="bag-empty">nothing yet...</p>';
+      bagPanel.hidden = false;
+      void bagPanel.offsetWidth;
+      bagPanel.classList.add('on');
+    });
+    document.getElementById('bagClose').addEventListener('click', () => {
+      bagPanel.classList.remove('on');
+      setTimeout(() => { bagPanel.hidden = true; }, 330);
+    });
+
+    // --- "continue" : vers la prochaine page (stage 2, à construire) ---
+    const stage2 = document.getElementById('stage2');
+    document.getElementById('continueBtn').addEventListener('click', () => {
+      stage2.hidden = false;
+      void stage2.offsetWidth;
+      stage2.classList.add('on');
+      quiz.classList.remove('on');
+      setTimeout(() => { quiz.hidden = true; }, 380);
+    });
+  </script>
 </body>
 </html>
