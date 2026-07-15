@@ -388,6 +388,350 @@
     .quiz.next { justify-content: center; z-index: 42; gap: 8px; }
     .stage-clear .cta { margin-top: 24px; }
 
+    /* --- Stage 2 : la radio et les CD --- */
+    .quiz.music { z-index: 42; }
+    .cd-shelf {
+      display: flex; gap: clamp(6px, 2vw, 14px);
+      justify-content: center;
+      margin: 4px 0 28px;
+    }
+    .cd-slot {
+      width: clamp(46px, 12.5vw, 60px);
+      position: relative;
+      touch-action: none; cursor: pointer;
+      user-select: none; -webkit-user-select: none;
+    }
+    .cd-slot .case { transition: transform .15s; }
+    .cd-slot:active .case { transform: scale(.9); }
+    .cd-slot.used .case { opacity: .25; filter: grayscale(.7); }
+    .cd { position: relative; width: 100%; }
+    .cd img { display: block; width: 100%; image-rendering: pixelated; }
+    .cd .cd-cover {
+      position: absolute; left: 30%; top: 30%;
+      width: 40%; height: 40%;
+      border-radius: 50%; object-fit: cover;
+    }
+    /* boîtier plastique (jewel case) : la cover remplit la jaquette */
+    .case { position: relative; width: 100%; }
+    .case img { display: block; width: 100%; image-rendering: pixelated; }
+    .case .case-cover {
+      position: absolute; left: 20.8%; top: 9.1%;
+      width: 75%; height: 81.8%;
+      object-fit: cover;
+    }
+    .cd-num {
+      position: absolute; bottom: -16px; left: 50%;
+      transform: translateX(-50%);
+      font-size: 8px; color: var(--framboise);
+    }
+    .radio-wrap { position: relative; width: clamp(250px, 74vw, 330px); }
+    .radio-img {
+      width: 100%; display: block; image-rendering: pixelated;
+      filter: drop-shadow(4px 4px 0 rgba(138,19,59,.2));
+    }
+    .deck {
+      position: absolute; left: 51%; top: 55%;
+      width: 29%; aspect-ratio: 1;
+      transform: translate(-50%, -50%);
+    }
+    .deck .cd { position: absolute; inset: 0; animation: spin 2s linear infinite; }
+    @keyframes spin { to { transform: rotate(1turn); } }
+    .notes-layer { position: absolute; left: 0; right: 0; top: 0; height: 0; pointer-events: none; }
+    .note { position: absolute; width: 18px; color: var(--framboise); animation: noteup 1.8s linear both; }
+    @keyframes noteup {
+      0%   { transform: translateY(0); opacity: 0; }
+      15%  { opacity: 1; }
+      100% { transform: translateY(-70px) translateX(var(--drift, 8px)) rotate(14deg); opacity: 0; }
+    }
+    .radio-hint {
+      font-size: clamp(8px, 2.4vw, 10px);
+      color: var(--ink); text-align: center;
+      margin: 12px auto 14px; min-height: 14px;
+      max-width: 300px; line-height: 1.7;
+    }
+    .rh-title { color: var(--framboise); }
+    .rh-artist { color: var(--rose); font-size: .9em; }
+    .music.done .cd-shelf, .music.done .radio-wrap,
+    .music.done .radio-hint, .music.done #keepBtn { display: none; }
+    .music-toast {
+      position: fixed; bottom: 26px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--framboise); color: var(--cream);
+      font-size: clamp(8px, 2.4vw, 10px);
+      padding: 12px 14px; z-index: 95;
+      border: 3px solid var(--cream);
+      box-shadow: 0 0 0 3px var(--framboise);
+      white-space: nowrap;
+    }
+    .music-toast[hidden] { display: none; }
+    .drag-ghost { position: fixed; z-index: 95; pointer-events: none; }
+
+    /* --- Stage 3 : the push-up challenge --- */
+    .quiz.pushup { z-index: 42; }
+    .gym {
+      position: relative;
+      width: clamp(240px, 74vw, 330px);
+      margin: 8px 0 4px;
+    }
+    .pushup-girl {
+      display: block; width: 100%;
+      image-rendering: pixelated;
+      filter: drop-shadow(4px 4px 0 rgba(138,19,59,.2));
+      --amp: 0px;
+      animation: tremble .22s steps(2, end) infinite;
+    }
+    @keyframes tremble {
+      0%, 100% { transform: translate(0, 0); }
+      25% { transform: translate(calc(var(--amp) * -1), 0); }
+      50% { transform: translate(var(--amp), calc(var(--amp) * -1)); }
+      75% { transform: translate(calc(var(--amp) * -1), var(--amp)); }
+    }
+    .pushup-girl.victory { animation: victoryjump .55s steps(5, end) infinite; }
+    @keyframes victoryjump {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-16px); }
+    }
+    .gym .ground {
+      height: 6px; margin-top: -3px;
+      background: var(--rose-soft);
+      box-shadow: 4px 4px 0 rgba(138,19,59,.15);
+    }
+    .sweat-layer { position: absolute; inset: 0; pointer-events: none; }
+    .sweat {
+      position: absolute; width: 7px; height: 9px;
+      background: #9adcff; border: 2px solid #4f9fd8;
+      animation: sweatfall .7s steps(5, end) both;
+    }
+    @keyframes sweatfall {
+      0% { transform: translate(0, 0); opacity: 1; }
+      100% { transform: translate(var(--sx, 10px), 36px); opacity: 0; }
+    }
+    .power-wrap {
+      display: flex; align-items: center; gap: 10px;
+      margin: 20px 0 4px;
+    }
+    .power-label { font-size: clamp(8px, 2.2vw, 10px); color: var(--framboise); }
+    .power-bar {
+      width: min(200px, 54vw); height: 18px;
+      background: var(--cream);
+      border: 4px solid var(--framboise);
+      box-shadow: 4px 4px 0 rgba(138,19,59,.25);
+    }
+    .power-fill {
+      height: 100%; width: 0%;
+      background: repeating-linear-gradient(90deg,
+        var(--rose) 0 8px, var(--rose-soft) 8px 10px);
+      transition: width .12s steps(3, end);
+    }
+    .power-fill.full {
+      background: repeating-linear-gradient(90deg, #ffd654 0 8px, #ffec96 8px 10px);
+    }
+    .tap-btn {
+      font-family: inherit;
+      font-size: clamp(13px, 3.8vw, 17px);
+      color: var(--cream); background: var(--rose);
+      border: 4px solid var(--framboise);
+      box-shadow: 0 8px 0 var(--framboise);
+      width: min(250px, 68vw);
+      padding: 24px 10px;
+      margin-top: 18px;
+      cursor: pointer; letter-spacing: 1px;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      user-select: none; -webkit-user-select: none;
+    }
+    .tap-btn:active { transform: translateY(6px); box-shadow: 0 2px 0 var(--framboise); }
+    .tap-btn[disabled] { opacity: .4; }
+    .pushup-hint {
+      font-size: clamp(8px, 2.4vw, 10px);
+      color: var(--ink); text-align: center; line-height: 1.8;
+      margin-top: 14px; min-height: 28px;
+    }
+    .pushup.done .gym, .pushup.done .power-wrap,
+    .pushup.done .tap-btn, .pushup.done .pushup-hint,
+    .pushup.done .question { display: none; }
+
+    /* --- Stage 4 : le musee --- */
+    .quiz.museum { z-index: 42; }
+    .museum-hint {
+      font-size: clamp(8px, 2.4vw, 10px); color: var(--ink);
+      text-align: center; margin: -20px 0 16px;
+      animation: blink .9s steps(1) infinite;
+    }
+    .museum-hint[hidden] { display: none; }
+    .gallery {
+      position: relative;
+      width: min(340px, 92vw);
+      padding: 22px 10px 30px;
+      display: flex; justify-content: center; align-items: flex-start;
+      gap: clamp(8px, 3vw, 18px);
+      background: repeating-linear-gradient(90deg, #ffe9f1 0 14px, #ffdfeb 14px 28px);
+      border: 4px solid var(--framboise);
+      box-shadow: 4px 4px 0 rgba(138,19,59,.25);
+    }
+    .gallery::after {                 /* plinthe en bas du mur */
+      content: ''; position: absolute; left: 0; right: 0; bottom: 0;
+      height: 16px; background: var(--rose-soft);
+      border-top: 3px solid var(--framboise);
+    }
+    .wall-art {
+      position: relative; z-index: 1;
+      width: clamp(78px, 24vw, 100px);
+      cursor: pointer; -webkit-tap-highlight-color: transparent;
+      transition: transform .15s;
+    }
+    .wall-art img { display: block; width: 100%; image-rendering: pixelated; }
+    .wall-art:active { transform: scale(.94); }
+    .wall-art .plaque {
+      display: block; margin: 6px auto 0; width: fit-content;
+      font-size: 7px; color: var(--ink);
+      background: #ffd654; border: 2px solid var(--framboise);
+      padding: 3px 4px; white-space: nowrap;
+    }
+    .wall-art.dim { opacity: .3; filter: grayscale(.6); pointer-events: none; }
+    .wall-art.picked { animation: pickedpop .4s steps(6, end); }
+    .wall-art.picked img {
+      box-shadow: 0 0 0 3px var(--rose), 0 0 18px 4px rgba(233,84,122,.55);
+    }
+    @keyframes pickedpop {
+      0% { transform: scale(1); } 50% { transform: scale(1.12); } 100% { transform: scale(1); }
+    }
+    .owner {
+      position: absolute; right: 4vw; bottom: 262px;
+      width: clamp(84px, 24vw, 110px);
+      image-rendering: pixelated;
+      filter: drop-shadow(4px 4px 0 rgba(138,19,59,.2));
+      animation: ownerin .7s steps(7, end) both;
+    }
+    .owner[hidden] { display: none; }
+    @keyframes ownerin {
+      from { transform: translateX(150%); }
+      to   { transform: translateX(0); }
+    }
+    .dlg {
+      position: absolute; bottom: 22px; left: 50%;
+      transform: translateX(-50%);
+      width: min(340px, 92vw);
+      background: var(--cream);
+      border: 4px solid var(--framboise);
+      box-shadow: 4px 4px 0 rgba(138,19,59,.25);
+      padding: 16px 12px 12px;
+    }
+    .dlg[hidden] { display: none; }
+    .dlg-name {
+      position: absolute; top: -12px; left: 10px;
+      background: var(--framboise); color: var(--cream);
+      font-size: 8px; padding: 4px 6px;
+      border: 2px solid var(--cream);
+      box-shadow: 0 0 0 2px var(--framboise);
+    }
+    .dlg-text {
+      font-size: clamp(8px, 2.4vw, 10px);
+      color: var(--ink); line-height: 1.9;
+      min-height: 56px; text-align: left;
+    }
+    .dlg-choices { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+    .dlg-btn {
+      font-family: inherit;
+      font-size: clamp(8px, 2.3vw, 10px);
+      color: var(--framboise); background: #fff;
+      border: 3px solid var(--rose);
+      box-shadow: 3px 3px 0 var(--rose);
+      padding: 10px 8px; cursor: pointer;
+      letter-spacing: .5px; text-align: left;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .dlg-btn::before { content: '\25B8 '; }
+    .dlg-btn:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--rose); }
+    .museum.done .gallery, .museum.done .owner, .museum.done .dlg,
+    .museum.done .museum-hint, .museum.done .question { display: none; }
+
+    /* --- Stage 5 : l'examen final --- */
+    .quiz.exam { z-index: 42; }
+    .exam-hint {
+      font-size: clamp(8px, 2.4vw, 10px); color: var(--ink);
+      text-align: center; margin: -20px 0 20px;
+      animation: blink .9s steps(1) infinite;
+    }
+    .exam-hint[hidden] { display: none; }
+    .blackboard {
+      width: min(340px, 92vw); image-rendering: pixelated;
+      filter: drop-shadow(4px 4px 0 rgba(138,19,59,.2));
+      margin-bottom: 18px;
+    }
+    .exam-papers {
+      display: flex; flex-direction: row; align-items: stretch;
+      gap: clamp(8px, 2.6vw, 16px);
+      width: min(360px, 94vw);
+    }
+    .exam-paper {
+      flex: 1; min-width: 0;
+      text-align: left;
+      background:
+        repeating-linear-gradient(0deg, #fff 0 13px, #ffe3ee 13px 14px);
+      border: 4px solid var(--framboise);
+      box-shadow: 5px 5px 0 rgba(138,19,59,.3);
+      padding: 12px 10px 10px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .ep-tag {
+      width: fit-content;
+      background: var(--framboise); color: var(--cream);
+      font-size: 8px; padding: 4px 6px;
+    }
+    .ep-txt { font-size: clamp(8px, 2.4vw, 10px); color: var(--ink); line-height: 1.7; }
+    .ep-sub { font-size: 7px; color: var(--rose); }
+    .exam-input {
+      font-family: inherit;
+      font-size: 16px;                /* 16px = pas de zoom iOS au focus */
+      color: var(--ink); background: #fff;
+      border: 4px solid var(--framboise);
+      box-shadow: 3px 3px 0 rgba(138,19,59,.25);
+      padding: 9px 6px;
+      width: 100%; min-width: 0;
+      margin-top: auto;               /* aligne les inputs en bas des 2 copies */
+    }
+    .exam-input::placeholder { color: #d9a8bb; font-size: 10px; }
+    .exam-input:focus { outline: none; border-color: var(--rose); }
+    .exam-submit {
+      font-family: inherit;
+      font-size: clamp(8px, 2.3vw, 10px);
+      color: var(--cream); background: var(--rose);
+      border: 3px solid var(--framboise);
+      box-shadow: 0 4px 0 var(--framboise);
+      padding: 10px 6px;
+      cursor: pointer; letter-spacing: 1px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .exam-submit:active { transform: translateY(4px); box-shadow: 0 0 0 var(--framboise); }
+    .exam-feedback {
+      font-size: clamp(7px, 2.1vw, 9px);
+      color: var(--framboise); text-align: center; line-height: 1.8;
+      min-height: 30px; margin-top: 2px;
+    }
+    .exam.done .exam-papers, .exam.done .blackboard,
+    .exam.done .exam-hint, .exam.done .question { display: none; }
+
+    /* --- Stage 6 : le dernier trade + THE END --- */
+    .quiz.trade { z-index: 42; }
+    .merchant {
+      width: clamp(120px, 36vw, 160px);
+      image-rendering: pixelated;
+      filter: drop-shadow(4px 4px 0 rgba(138,19,59,.2));
+      margin-top: 6px;
+      animation: bob 2.6s steps(6, end) infinite;
+    }
+    .trade.done .merchant, .trade.done .question, .trade.done .dlg { display: none; }
+    .reward-img.wide { width: clamp(190px, 62vw, 280px); }
+    .finale-chars { display: flex; gap: 34px; align-items: flex-end; margin: 10px 0 8px; }
+    .finale-chars img {
+      width: clamp(84px, 24vw, 110px);
+      image-rendering: pixelated;
+      filter: drop-shadow(4px 4px 0 rgba(138,19,59,.2));
+      animation: bob 2.4s steps(6, end) infinite;
+    }
+    .finale-chars img:last-child { animation-delay: .4s; }
+
     /* --- Panneau du sac (consulter les cadeaux) --- */
     .bag { cursor: pointer; }
     .bag:active { transform: scale(.92); }
@@ -489,6 +833,14 @@
       <rect x="6" y="3" width="1" height="3"/>
       <rect x="7" y="4" width="1" height="1"/>
     </symbol>
+    <symbol id="pxnote" viewBox="0 0 8 10" shape-rendering="crispEdges">
+      <rect x="5" y="0" width="1" height="8"/>
+      <rect x="6" y="0" width="2" height="2"/>
+      <rect x="6" y="2" width="1" height="1"/>
+      <rect x="2" y="6" width="3" height="1"/>
+      <rect x="1" y="7" width="5" height="2"/>
+      <rect x="2" y="9" width="3" height="1"/>
+    </symbol>
     <symbol id="pxx" viewBox="0 0 7 7" shape-rendering="crispEdges">
       <rect x="0" y="0" width="2" height="2"/><rect x="5" y="0" width="2" height="2"/>
       <rect x="1" y="1" width="2" height="2"/><rect x="4" y="1" width="2" height="2"/>
@@ -577,11 +929,140 @@
     <div class="fail-banner" id="failBanner" hidden></div>
   </div>
 
-  <!-- Stage 2 : prochaine page (placeholder, à construire) -->
-  <div class="quiz next" id="stage2" hidden>
-    <p class="clear-title">STAGE 2</p>
-    <p class="clear-sub">under construction<span class="blink">_</span></p>
+  <!-- Stage 2 : choisis ta musique -->
+  <div class="quiz music" id="stage2" hidden>
+    <p class="question">STAGE 2<br>choose your soundtrack !</p>
+    <div class="cd-shelf" id="cdShelf"></div>
+    <div class="radio-wrap">
+      <img class="radio-img" src="radio.png?v=1" alt="radio">
+      <div class="deck" id="deck"></div>
+      <div class="notes-layer" id="notesLayer"></div>
+    </div>
+    <p class="radio-hint" id="radioHint">drag (or tap) a CD to play it</p>
+    <button class="cta" id="keepBtn" hidden>&#9829; keep this one &#9829;</button>
+    <div class="stage-clear" id="stage2Clear" hidden>
+      <p class="clear-title">STAGE 2 CLEAR !</p>
+      <p class="clear-sub">excellent taste &#9829;</p>
+      <button class="cta" id="continue2Btn">&#9829; continue &#9829;</button>
+    </div>
   </div>
+
+  <!-- Stage 3 : the push-up challenge (tap le plus vite possible !) -->
+  <div class="quiz pushup" id="stage3" hidden>
+    <p class="question">STAGE 3<br>help her do ONE (1) push-up !</p>
+    <div class="gym">
+      <img class="pushup-girl" id="pushupGirl" src="pushup_down.png?v=2" alt="her, giving everything">
+      <div class="ground"></div>
+      <div class="sweat-layer" id="sweatLayer"></div>
+    </div>
+    <div class="power-wrap">
+      <span class="power-label">POWER</span>
+      <div class="power-bar"><div class="power-fill" id="powerFill"></div></div>
+    </div>
+    <button class="tap-btn" id="tapBtn">TAP !! TAP !! TAP !!</button>
+    <p class="pushup-hint" id="pushupHint">tap FAST to give her strength !</p>
+    <div class="stage-clear" id="stage3Clear" hidden>
+      <p class="clear-title">STAGE 3 CLEAR !</p>
+      <p class="clear-sub">one whole push-up. certified athlete &#9829;</p>
+      <button class="cta" id="continue3Btn">&#9829; continue &#9829;</button>
+    </div>
+  </div>
+
+  <!-- Stage 4 : le musee — choisir un tableau puis negocier avec la proprietaire -->
+  <div class="quiz museum" id="stage4" hidden>
+    <p class="question">STAGE 4<br>the museum</p>
+    <p class="museum-hint" id="museumHint">tap the painting you love the most !</p>
+    <div class="gallery">
+      <div class="wall-art" data-p="0">
+        <img src="painting1.png?v=1" alt="Le Croissant">
+        <span class="plaque">Le Croissant</span>
+      </div>
+      <div class="wall-art" data-p="1">
+        <img src="painting2.png?v=1" alt="Amour No. 5">
+        <span class="plaque">Amour No. 5</span>
+      </div>
+      <div class="wall-art" data-p="2">
+        <img src="painting3.png?v=1" alt="Le Chat Parisien">
+        <span class="plaque">Le Chat Parisien</span>
+      </div>
+    </div>
+    <img class="owner" id="ownerImg" src="owner.png?v=1" alt="the museum owner" hidden>
+    <div class="dlg" id="dlg" hidden>
+      <p class="dlg-name">MME. LOUVRE</p>
+      <p class="dlg-text" id="dlgText"></p>
+      <div class="dlg-choices" id="dlgChoices"></div>
+    </div>
+    <div class="stage-clear" id="stage4Clear" hidden>
+      <p class="clear-title">STAGE 4 CLEAR !</p>
+      <p class="clear-sub">a true art collector &#9829;</p>
+      <button class="cta" id="continue4Btn">&#9829; continue &#9829;</button>
+    </div>
+  </div>
+
+  <!-- Stage 5 : l'examen final — equation absurde OU "le plus beau mec ?" -->
+  <div class="quiz exam" id="stage5" hidden>
+    <p class="question">STAGE 5<br>the final exam</p>
+    <p class="exam-hint" id="examHint">answer ONE question to pass. good luck.</p>
+    <img class="blackboard" src="blackboard.png?v=2" alt="the Wheeler-DeWitt equation. easy.">
+    <div class="exam-papers" id="examPapers">
+      <!-- Question A : l'equation de Wheeler-DeWitt (au tableau) -->
+      <div class="exam-paper">
+        <span class="ep-tag">QUESTION A</span>
+        <span class="ep-txt">solve the equation.</span>
+        <span class="ep-sub">(very easy. trust me.)</span>
+        <input class="exam-input" id="inputA" type="text" maxlength="24"
+               placeholder="psi = ?" autocomplete="off" autocapitalize="off" autocorrect="off">
+        <button class="exam-submit" id="submitA">submit</button>
+        <p class="exam-feedback" id="feedbackA"></p>
+      </div>
+      <!-- Question B : le plus beau mec -->
+      <div class="exam-paper">
+        <span class="ep-tag">QUESTION B</span>
+        <span class="ep-txt">who is the most handsome guy ?</span>
+        <span class="ep-sub">(impossible. do not pick.)</span>
+        <input class="exam-input" id="inputB" type="text" maxlength="24"
+               placeholder="his name..." autocomplete="off" autocapitalize="off" autocorrect="off">
+        <button class="exam-submit" id="submitB">submit</button>
+        <p class="exam-feedback" id="feedbackB"></p>
+      </div>
+    </div>
+    <div class="stage-clear" id="stage5Clear" hidden>
+      <p class="clear-title">STAGE 5 CLEAR !</p>
+      <p class="clear-sub">top of the class &#9829;</p>
+      <button class="cta" id="continue5Btn">&#9829; continue &#9829;</button>
+    </div>
+  </div>
+
+  <!-- Stage 6 : le dernier trade — tout le sac contre LE mot de passe -->
+  <div class="quiz trade" id="stage6" hidden>
+    <p class="question">STAGE 6<br>the last deal</p>
+    <img class="merchant" id="merchantImg" src="merchant.png?v=1" alt="a very trustworthy merchant">
+    <div class="dlg" id="dlg6" hidden>
+      <p class="dlg-name">???</p>
+      <p class="dlg-text" id="dlg6Text"></p>
+      <div class="dlg-choices" id="dlg6Choices"></div>
+    </div>
+    <div class="stage-clear" id="stage6Clear" hidden>
+      <p class="clear-title">STAGE 6 CLEAR !</p>
+      <p class="clear-sub">now... go send that word &#9829;</p>
+      <button class="cta" id="continue6Btn">&#9829; continue &#9829;</button>
+    </div>
+  </div>
+
+  <!-- THE END : ecran final -->
+  <div class="quiz next" id="finale" hidden>
+    <div class="float scene-float" id="finaleFloat"></div>
+    <p class="clear-title">THE END</p>
+    <div class="finale-chars">
+      <img src="him.png?v=1" alt="him">
+      <img src="her.png?v=1" alt="her">
+    </div>
+    <p class="clear-sub">happy birthday, Mele &#9829;<br><br>
+      psst... don't forget to send<br>"molim" to Amel &#9829;</p>
+  </div>
+
+  <!-- Petit message (fichier musique manquant, etc.) -->
+  <div class="music-toast" id="musicToast" hidden></div>
 
   <!-- Panneau du sac : consulter les cadeaux gagnés -->
   <div class="bag-panel" id="bagPanel" hidden>
@@ -600,6 +1081,46 @@
     <img class="reward-img" id="rewardImg" src="passport.png?v=1" alt="French passport">
     <p class="reward-name">reward unlocked:<br>FRENCH PASSPORT</p>
     <button class="cta" id="claimBtn">&#9829; claim reward &#9829;</button>
+  </div>
+
+  <!-- Overlay succès du stage 3 : LE trophée -->
+  <div class="success" id="success3" hidden>
+    <div class="float scene-float" id="success3Float"></div>
+    <p class="grats1">SHE DID IT !!</p>
+    <p class="grats2">one full push-up. history has been made &#9829;</p>
+    <img class="reward-img" id="trophyImg" src="trophy.png?v=1" alt="THE push-up trophy">
+    <p class="reward-name">reward unlocked:<br>THE PUSH-UP TROPHY</p>
+    <button class="cta" id="claim3Btn">&#9829; claim reward &#9829;</button>
+  </div>
+
+  <!-- Overlay succes du stage 4 : le tableau negocie -->
+  <div class="success" id="success4" hidden>
+    <div class="float scene-float" id="success4Float"></div>
+    <p class="grats1">DEAL !!</p>
+    <p class="grats2">negotiated like a pro. the owner is impressed &#9829;</p>
+    <img class="reward-img" id="paintingImg" src="painting1.png?v=1" alt="the painting">
+    <p class="reward-name" id="paintingName">reward unlocked:<br>LE CROISSANT</p>
+    <button class="cta" id="claim4Btn">&#9829; claim reward &#9829;</button>
+  </div>
+
+  <!-- Overlay succes du stage 5 : le certificat A+ -->
+  <div class="success" id="success5" hidden>
+    <div class="float scene-float" id="success5Float"></div>
+    <p class="grats1">CORRECT !!</p>
+    <p class="grats2" id="grats5">the ONLY acceptable answer &#9829;</p>
+    <img class="reward-img" id="certImg" src="certificate.png?v=1" alt="A+ certificate">
+    <p class="reward-name">reward unlocked:<br>GOOD TASTE CERTIFICATE</p>
+    <button class="cta" id="claim5Btn">&#9829; claim reward &#9829;</button>
+  </div>
+
+  <!-- Overlay succes du stage 6 : LE mot de passe -->
+  <div class="success" id="success6" hidden>
+    <div class="float scene-float" id="success6Float"></div>
+    <p class="grats1">TRADED !!</p>
+    <p class="grats2">the password is yours. use it wisely...</p>
+    <img class="reward-img wide" id="passwordImg" src="password.png?v=1" alt="the password">
+    <p class="reward-name">send this word to Amel on instagram<br>to unlock a SURPRISE &#9829;</p>
+    <button class="cta" id="claim6Btn">&#9829; take the password &#9829;</button>
   </div>
 
   <script>
@@ -788,7 +1309,7 @@
       setTimeout(() => { bagPanel.hidden = true; }, 330);
     });
 
-    // --- "continue" : vers la prochaine page (stage 2, à construire) ---
+    // --- "continue" : vers le stage 2 (musique) ---
     const stage2 = document.getElementById('stage2');
     document.getElementById('continueBtn').addEventListener('click', () => {
       stage2.hidden = false;
@@ -797,6 +1318,755 @@
       quiz.classList.remove('on');
       setTimeout(() => { quiz.hidden = true; }, 380);
     });
+
+    // =====================================================================
+    // >>> STAGE 2 - MUSIQUES : les vraies chansons (fichiers deja deposes) <<<
+    //   music/  : les .mp3        covers/ : les pochettes (.png ou .jpg)
+    //   id cdN  -> disque cdN.png + boitier caseN.png (numero = ordre ci-dessous)
+    // =====================================================================
+    const TRACKS = [
+      { id: 'cd1', title: 'Stop the World I Wanna Get Off With You', artist: 'Arctic Monkeys',
+        src: 'music/ARCTIC_MONKEYS_stop_the_world_i_wanna_get_off_with_you.mp3',
+        cover: 'covers/ARCTIC_MONKEYS_stop_the_world_i_wanna_get_off_with_you.png' },
+      { id: 'cd2', title: 'Rain', artist: 'BTS',
+        src: 'music/BTS_Rain.mp3', cover: 'covers/BTS_Rain.png' },
+      { id: 'cd3', title: 'Always Forever', artist: 'Cults',
+        src: 'music/CULTS_Always_Forever.mp3', cover: 'covers/CULTS_Always_Forever.jpg' },
+      { id: 'cd4', title: 'Brand New City', artist: 'Mitski',
+        src: 'music/MITSKI_brand_new_city.mp3', cover: 'covers/MITSKI_brand_new_city.png' },
+      { id: 'cd5', title: 'Hall of Fame', artist: 'Stray Kids',
+        src: 'music/STRAY_KIDS_Hall_Of_Fame.mp3', cover: 'covers/STRAY_KIDS_Hall_Of_Fame.jpg' }
+    ];
+    TRACKS.forEach((t, i) => {
+      REWARD_DEFS['music:' + t.id] = { img: 'case' + (i + 1) + '.png?v=1',
+        name: t.title + ' - ' + t.artist };
+    });
+
+    const shelf = document.getElementById('cdShelf');
+    const deck = document.getElementById('deck');
+    const notesLayer = document.getElementById('notesLayer');
+    const radioHint = document.getElementById('radioHint');
+    const keepBtn = document.getElementById('keepBtn');
+    const musicToast = document.getElementById('musicToast');
+    const player = new Audio();
+    player.loop = true;
+    let currentCd = -1, toastTO = null;
+
+    function cdHTML(i) {              // le disque nu (platine, drag, vol vers le sac)
+      return '<div class="cd">' +
+        '<img src="cd' + (i + 1) + '.png?v=1" alt="">' +
+        '<img class="cd-cover" src="' + TRACKS[i].cover + '" alt="" ' +
+        'onerror="this.style.display=\'none\'">' +
+        '</div>';
+    }
+    function caseHTML(i) {            // le boîtier plastique (étagère, sac)
+      return '<div class="case">' +
+        '<img src="case' + (i + 1) + '.png?v=1" alt="">' +
+        '<img class="case-cover" src="' + TRACKS[i].cover + '" alt="" ' +
+        'onerror="this.style.display=\'none\'">' +
+        '</div>';
+    }
+    shelf.innerHTML = TRACKS.map((t, i) =>
+      '<div class="cd-slot" data-i="' + i + '">' + caseHTML(i) +
+      '<span class="cd-num">' + (i + 1) + '</span></div>').join('');
+
+    function toast(msg) {
+      musicToast.textContent = msg;
+      musicToast.hidden = false;
+      clearTimeout(toastTO);
+      toastTO = setTimeout(() => { musicToast.hidden = true; }, 2200);
+    }
+    player.addEventListener('error', () => {
+      if (!stage2.hidden) toast('music file missing... for now !');
+    });
+
+    // notes de musique qui s'échappent de la radio pendant la lecture
+    function spawnNote() {
+      const n = document.createElementNS(SVGNS, 'svg');
+      n.setAttribute('viewBox', '0 0 8 10');
+      n.setAttribute('class', 'note');
+      n.style.left = (30 + Math.random() * 40) + '%';
+      n.style.setProperty('--drift', (Math.random() * 24 - 12) + 'px');
+      const u = document.createElementNS(SVGNS, 'use');
+      u.setAttribute('href', '#pxnote');
+      n.appendChild(u);
+      notesLayer.appendChild(n);
+      setTimeout(() => n.remove(), 1900);
+    }
+    setInterval(() => { if (!player.paused) spawnNote(); }, 480);
+
+    function insertCd(i) {
+      if (currentCd === i) return;
+      currentCd = i;
+      shelf.querySelectorAll('.cd-slot').forEach(s => s.classList.remove('used'));
+      shelf.querySelector('[data-i="' + i + '"]').classList.add('used');
+      deck.innerHTML = cdHTML(i);
+      keepBtn.hidden = false;
+      radioHint.innerHTML = 'now playing<br>' +
+        '<span class="rh-title">' + TRACKS[i].title + '</span><br>' +
+        '<span class="rh-artist">' + TRACKS[i].artist + '</span>';
+      player.src = TRACKS[i].src;
+      player.play().catch(() => {});   // fichier manquant : géré par l'event 'error'
+    }
+
+    // glisser-déposer (pointer events, compatible iPhone) + simple tap
+    let drag = null;
+    shelf.addEventListener('pointerdown', e => {
+      const slot = e.target.closest('.cd-slot');
+      if (!slot || drag) return;
+      e.preventDefault();
+      drag = { i: +slot.dataset.i, x0: e.clientX, y0: e.clientY, moved: false, ghost: null,
+               rect: slot.querySelector('.case').getBoundingClientRect() };
+      try { slot.setPointerCapture(e.pointerId); } catch (err) {}
+    });
+    shelf.addEventListener('pointermove', e => {
+      if (!drag) return;
+      if (!drag.moved && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) > 8) {
+        drag.moved = true;
+        drag.ghost = document.createElement('div');
+        drag.ghost.className = 'drag-ghost';
+        drag.ghost.style.width = drag.rect.width + 'px';
+        drag.ghost.innerHTML = cdHTML(drag.i);
+        document.body.appendChild(drag.ghost);
+      }
+      if (drag.ghost) {
+        drag.ghost.style.left = (e.clientX - drag.rect.width / 2) + 'px';
+        drag.ghost.style.top = (e.clientY - drag.rect.height / 2) + 'px';
+      }
+    });
+    shelf.addEventListener('pointerup', e => {
+      if (!drag) return;
+      const d = drag; drag = null;
+      if (d.ghost) d.ghost.remove();
+      if (!d.moved) { insertCd(d.i); return; }         // simple tap
+      const r = deck.getBoundingClientRect();          // déposé sur la radio ?
+      if (e.clientX > r.left - 24 && e.clientX < r.right + 24 &&
+          e.clientY > r.top - 24 && e.clientY < r.bottom + 24) {
+        insertCd(d.i);
+      }
+    });
+    shelf.addEventListener('pointercancel', () => {
+      if (drag && drag.ghost) drag.ghost.remove();
+      drag = null;
+    });
+
+    // "keep this one" : la musique devient cadeau + fond sonore du site
+    keepBtn.addEventListener('click', () => {
+      if (currentCd < 0) return;
+      const t = TRACKS[currentCd];
+      for (let k = rewards.length - 1; k >= 0; k--) {
+        if (String(rewards[k]).indexOf('music:') === 0) rewards.splice(k, 1);
+      }
+      rewards.push('music:' + t.id);
+      localStorage.setItem('mele-rewards', JSON.stringify(rewards));
+      localStorage.setItem('mele-music', t.id);
+      // le CD s'envole vers le sac
+      bag.hidden = false;
+      const from = deck.querySelector('.cd').getBoundingClientRect();
+      const to = bag.getBoundingClientRect();
+      const clone = document.createElement('div');
+      clone.className = 'fly-clone';
+      clone.innerHTML = cdHTML(currentCd);
+      clone.style.cssText = 'position:fixed;z-index:90;' +
+        'left:' + from.left + 'px;top:' + from.top + 'px;width:' + from.width + 'px;' +
+        'transition:transform .8s cubic-bezier(.45,-.25,.85,.55),opacity .8s;';
+      document.body.appendChild(clone);
+      const dx = (to.left + to.width / 2) - (from.left + from.width / 2);
+      const dy = (to.top + to.height / 2) - (from.top + from.height / 2);
+      void clone.offsetWidth;
+      clone.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(.3) rotate(180deg)';
+      clone.style.opacity = '.4';
+      deck.innerHTML = '';
+      stage2.classList.add('done');
+      document.getElementById('stage2Clear').hidden = false;
+      setTimeout(() => { clone.remove(); refreshBag(true); }, 830);
+    });
+
+    // continue -> stage 3 (the push-up challenge)
+    const stage3 = document.getElementById('stage3');
+    document.getElementById('continue2Btn').addEventListener('click', () => {
+      stage3.hidden = false;
+      void stage3.offsetWidth;
+      stage3.classList.add('on');
+      stage2.classList.remove('on');
+      setTimeout(() => { stage2.hidden = true; }, 380);
+    });
+
+    // =====================================================================
+    // Stage 3 : the push-up challenge — taper vite = donner de la force.
+    // La jauge monte a chaque tap et RETOMBE si elle s'arrete (gravite !).
+    // 100% => la pompe est faite => trophee de LA pompe.
+    // =====================================================================
+    REWARD_DEFS.pushup = { img: 'trophy.png?v=1', name: 'THE Push-up Trophy' };
+    const girl = document.getElementById('pushupGirl');
+    const powerFill = document.getElementById('powerFill');
+    const tapBtn = document.getElementById('tapBtn');
+    const pushupHint = document.getElementById('pushupHint');
+    const sweatLayer = document.getElementById('sweatLayer');
+    const PUSHUP_FRAMES = ['pushup_down.png?v=2', 'pushup_mid.png?v=2', 'pushup_up.png?v=2'];
+    const PUSHUP_HINTS = [                 // encouragements en escalade
+      [0,  'tap FAST to give her strength !'],
+      [20, 'yes !! keep tapping !!'],
+      [45, 'PUSH !! PUSH !!'],
+      [70, "almost there. DON'T stop !!"],
+      [88, 'ONE. LAST. PUSH !!!']
+    ];
+    let power = 0, pushupDone = false;
+
+    function updatePushup() {
+      powerFill.style.width = Math.min(100, power) + '%';
+      girl.src = PUSHUP_FRAMES[power >= 100 ? 2 : power >= 45 ? 1 : 0];
+      // elle tremble d'autant plus fort que l'effort est intense
+      girl.style.setProperty('--amp', (power / 100 * 3).toFixed(1) + 'px');
+      if (!pushupDone) {
+        for (let h = PUSHUP_HINTS.length - 1; h >= 0; h--) {
+          if (power >= PUSHUP_HINTS[h][0]) { pushupHint.textContent = PUSHUP_HINTS[h][1]; break; }
+        }
+      }
+    }
+    function spawnSweat() {
+      const s = document.createElement('div');
+      s.className = 'sweat';
+      s.style.left = (10 + Math.random() * 20) + '%';
+      s.style.top = (24 + Math.random() * 30) + '%';
+      s.style.setProperty('--sx', (Math.random() * 28 - 14) + 'px');
+      sweatLayer.appendChild(s);
+      setTimeout(() => s.remove(), 750);
+    }
+    // la gravite reprend ses droits des qu'elle arrete de taper —
+    // et elle tire d'autant plus fort qu'elle est haute (la fin est BRUTALE)
+    setInterval(() => {
+      if (pushupDone || stage3.hidden || power <= 0) return;
+      power = Math.max(0, power - (1.2 + power / 100));
+      if (power === 0) pushupHint.textContent = 'gravity: 1 - Mele: 0. again !!';
+      updatePushup();
+    }, 100);
+
+    tapBtn.addEventListener('pointerdown', e => {
+      e.preventDefault();
+      if (pushupDone) return;
+      power = Math.min(100, power + 5);
+      if (power > 25) spawnSweat();
+      updatePushup();
+      if (power >= 100) winPushup();
+    });
+
+    function winPushup() {
+      pushupDone = true;
+      powerFill.classList.add('full');
+      pushupHint.textContent = 'SHE... SHE DID IT ?!';
+      tapBtn.disabled = true;
+      girl.classList.add('victory');
+      const s3f = document.getElementById('success3Float');
+      setTimeout(() => {
+        success3.hidden = false;
+        void success3.offsetWidth;
+        success3.classList.add('on');
+        for (let i = 0; i < 20; i++) setTimeout(() => spawnHeart(s3f), i * 70);
+      }, 1400);
+    }
+
+    const success3 = document.getElementById('success3');
+    document.getElementById('claim3Btn').addEventListener('click', () => {
+      if (!rewards.includes('pushup')) {
+        rewards.push('pushup');
+        localStorage.setItem('mele-rewards', JSON.stringify(rewards));
+      }
+      // le trophee s'envole vers le sac
+      bag.hidden = false;
+      const trophyImg = document.getElementById('trophyImg');
+      const from = trophyImg.getBoundingClientRect();
+      const to = bag.getBoundingClientRect();
+      const clone = trophyImg.cloneNode();
+      clone.classList.add('fly-clone');
+      clone.style.cssText = 'position:fixed;z-index:90;image-rendering:pixelated;' +
+        'left:' + from.left + 'px;top:' + from.top + 'px;width:' + from.width + 'px;' +
+        'transition:transform .8s cubic-bezier(.45,-.25,.85,.55),opacity .8s;';
+      document.body.appendChild(clone);
+      const dx = (to.left + to.width / 2) - (from.left + from.width / 2);
+      const dy = (to.top + to.height / 2) - (from.top + from.height / 2);
+      void clone.offsetWidth;
+      clone.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(.15) rotate(25deg)';
+      clone.style.opacity = '.5';
+      success3.classList.remove('on');
+      setTimeout(() => { success3.hidden = true; }, 350);
+      stage3.classList.add('done');
+      document.getElementById('stage3Clear').hidden = false;
+      setTimeout(() => { clone.remove(); refreshBag(true); }, 830);
+    });
+
+    // continue -> stage 4 (le musee)
+    const stage4 = document.getElementById('stage4');
+    document.getElementById('continue3Btn').addEventListener('click', () => {
+      stage4.hidden = false;
+      void stage4.offsetWidth;
+      stage4.classList.add('on');
+      stage3.classList.remove('on');
+      setTimeout(() => { stage3.hidden = true; }, 380);
+    });
+
+    // =====================================================================
+    // Stage 4 : le musee — elle tape son tableau prefere, la proprietaire
+    // arrive, et la negociation commence (dialogue a choix, facon RPG).
+    // =====================================================================
+    const PAINTINGS = [
+      { id: 'p1', img: 'painting1.png?v=1', name: 'Le Croissant' },
+      { id: 'p2', img: 'painting2.png?v=1', name: 'Amour No. 5' },
+      { id: 'p3', img: 'painting3.png?v=1', name: 'Le Chat Parisien' }
+    ];
+    PAINTINGS.forEach(p => {
+      REWARD_DEFS['painting:' + p.id] = { img: p.img, name: 'Painting: ' + p.name };
+    });
+
+    // ================================================================
+    // >>> STAGE 4 - DIALOGUE : c'est ICI qu'on personnalise <<<
+    // say = replique de la proprietaire (MME. LOUVRE).
+    // Chaque choix : { label, next } pour avancer vers un autre noeud
+    // ('WIN' = negociation gagnee), ou { label, sass } pour un refus
+    // (la proprietaire repond puis re-propose les memes choix).
+    // ================================================================
+    const OWNER_DIALOGUE = {
+      start: {
+        say: 'Welcome to my museum, dear. I see you are admiring this piece... you have exquisite taste.',
+        choices: [
+          { label: 'I want it.', next: 'refuse' },
+          { label: 'how much for it ?', next: 'refuse' },
+          { label: 'just looking !', sass: "hmph. that's what they all say. then they BEG." }
+        ]
+      },
+      refuse: {
+        say: 'HA ! This piece is PRICELESS. Not for sale. Museum policy, dear.',
+        choices: [
+          { label: 'pretty please ?', sass: 'adorable. still no.' },
+          { label: 'I will trade you a croissant', sass: '...a VIENNOISERIE ? tempting. very tempting. but no.' },
+          { label: "it's my birthday today.", next: 'deal' }
+        ]
+      },
+      deal: {
+        say: "your BIRTHDAY ?! why didn't you say so ! birthday girls have SPECIAL RIGHTS in my museum.",
+        choices: [
+          { label: 'so... can I have it ?', next: 'win' },
+          { label: 'yes. 100% my birthday.', next: 'win' }
+        ]
+      },
+      win: {
+        say: 'take it. wrap it up. but tell NO ONE, or everyone will want a birthday too... happy birthday, dear ♥',
+        choices: [
+          { label: 'thank you madame !! ♥', next: 'WIN' }
+        ]
+      }
+    };
+
+    const ownerImg = document.getElementById('ownerImg');
+    const dlg = document.getElementById('dlg');
+    const dlgText = document.getElementById('dlgText');
+    const dlgChoices = document.getElementById('dlgChoices');
+    const museumHint = document.getElementById('museumHint');
+    let pickedPainting = -1, typeTimer = null, skipSay = null;
+
+    document.querySelectorAll('.wall-art').forEach(el => {
+      el.addEventListener('click', () => {
+        if (pickedPainting >= 0) return;
+        pickedPainting = +el.dataset.p;
+        el.classList.add('picked');
+        document.querySelectorAll('.wall-art').forEach(o => {
+          if (o !== el) o.classList.add('dim');
+        });
+        museumHint.hidden = true;
+        ownerImg.hidden = false;               // la proprietaire entre en scene
+        setTimeout(() => {
+          dlg.hidden = false;
+          museumNode('start');
+        }, 800);
+      });
+    });
+
+    // effet machine a ecrire ; un tap sur la boite affiche le texte complet
+    function saySlow(text, done) {
+      clearInterval(typeTimer);
+      dlgChoices.innerHTML = '';
+      let i = 0;
+      dlgText.textContent = '';
+      typeTimer = setInterval(() => {
+        i++;
+        dlgText.textContent = text.slice(0, i);
+        if (i >= text.length) { clearInterval(typeTimer); typeTimer = null; skipSay = null; done(); }
+      }, 24);
+      skipSay = () => {
+        clearInterval(typeTimer); typeTimer = null; skipSay = null;
+        dlgText.textContent = text;
+        done();
+      };
+    }
+    dlg.addEventListener('click', e => {
+      if (e.target.closest('.dlg-btn')) return;
+      if (skipSay) skipSay();
+    });
+
+    function museumNode(id) {
+      const n = OWNER_DIALOGUE[id];
+      saySlow(n.say, () => showMuseumChoices(n));
+    }
+    function showMuseumChoices(n) {
+      dlgChoices.innerHTML = '';
+      n.choices.forEach(c => {
+        const b = document.createElement('button');
+        b.className = 'dlg-btn';
+        b.textContent = c.label;
+        b.addEventListener('click', () => {
+          if (c.next === 'WIN') return winMuseum();
+          if (c.next) museumNode(c.next);
+          else saySlow(c.sass, () => showMuseumChoices(n));   // refus -> memes choix
+        });
+        dlgChoices.appendChild(b);
+      });
+    }
+
+    const success4 = document.getElementById('success4');
+    function winMuseum() {
+      const p = PAINTINGS[pickedPainting];
+      document.getElementById('paintingImg').src = p.img;
+      document.getElementById('paintingName').innerHTML =
+        'reward unlocked:<br>' + p.name.toUpperCase();
+      success4.hidden = false;
+      void success4.offsetWidth;
+      success4.classList.add('on');
+      const s4f = document.getElementById('success4Float');
+      for (let i = 0; i < 20; i++) setTimeout(() => spawnHeart(s4f), i * 70);
+    }
+
+    document.getElementById('claim4Btn').addEventListener('click', () => {
+      const p = PAINTINGS[pickedPainting];
+      const rid = 'painting:' + p.id;
+      if (!rewards.includes(rid)) {
+        rewards.push(rid);
+        localStorage.setItem('mele-rewards', JSON.stringify(rewards));
+      }
+      // le tableau s'envole vers le sac
+      bag.hidden = false;
+      const paintingImg = document.getElementById('paintingImg');
+      const from = paintingImg.getBoundingClientRect();
+      const to = bag.getBoundingClientRect();
+      const clone = paintingImg.cloneNode();
+      clone.classList.add('fly-clone');
+      clone.style.cssText = 'position:fixed;z-index:90;image-rendering:pixelated;' +
+        'left:' + from.left + 'px;top:' + from.top + 'px;width:' + from.width + 'px;' +
+        'transition:transform .8s cubic-bezier(.45,-.25,.85,.55),opacity .8s;';
+      document.body.appendChild(clone);
+      const dx = (to.left + to.width / 2) - (from.left + from.width / 2);
+      const dy = (to.top + to.height / 2) - (from.top + from.height / 2);
+      void clone.offsetWidth;
+      clone.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(.15) rotate(25deg)';
+      clone.style.opacity = '.5';
+      success4.classList.remove('on');
+      setTimeout(() => { success4.hidden = true; }, 350);
+      stage4.classList.add('done');
+      document.getElementById('stage4Clear').hidden = false;
+      setTimeout(() => { clone.remove(); refreshBag(true); }, 830);
+    });
+
+    // continue -> stage 5 (l'examen final)
+    const stage5 = document.getElementById('stage5');
+    document.getElementById('continue4Btn').addEventListener('click', () => {
+      stage5.hidden = false;
+      void stage5.offsetWidth;
+      stage5.classList.add('on');
+      stage4.classList.remove('on');
+      setTimeout(() => { stage4.hidden = true; }, 380);
+    });
+
+    // =====================================================================
+    // Stage 5 : l'examen final — QUESTION A (equation impossible) ou
+    // QUESTION B ("who is the most handsome guy ?" -> "Amel").
+    // Indices en escalade a chaque mauvaise reponse. Easter egg : repondre
+    // "Amel" a l'equation marche aussi (c'est la reponse a tout).
+    // =====================================================================
+    REWARD_DEFS.certificate = { img: 'certificate.png?v=1', name: 'Good Taste Certificate' };
+    const EXAM_FAILS_A = [                 // l'equation se moque d'elle
+      'wrong.',
+      'not even close.',
+      'interesting. and wrong.',
+      'the equation is CRYING.',
+      'A for effort. F for the answer.',
+      'psst... question B is right there.'
+    ];
+    const EXAM_HINTS_B = [                 // indices de plus en plus enormes
+      'nope ?! think HARDER.',
+      'hint: it is NOT a trick question.',
+      'hint: 4 letters.',
+      'hint: it starts with A.',
+      'hint: A _ _ L',
+      'hint: he made this website for you...',
+      'last hint: A-M-E-L. just type it.'
+    ];
+    const feedbackA = document.getElementById('feedbackA');
+    const feedbackB = document.getElementById('feedbackB');
+    const inputA = document.getElementById('inputA');
+    const inputB = document.getElementById('inputB');
+    let failsA = -1, failsB = -1, examDone = false;
+
+    // "Amel" en ignorant casse, espaces et ponctuation
+    const isAmel = s => s.toLowerCase().replace(/[^a-z]/g, '') === 'amel';
+
+    function examFail(which) {
+      stage5.classList.remove('shake');
+      void stage5.offsetWidth;
+      stage5.classList.add('shake');
+      if (which === 'A') {
+        failsA = Math.min(failsA + 1, EXAM_FAILS_A.length - 1);
+        feedbackA.textContent = EXAM_FAILS_A[failsA];
+      } else {
+        failsB = Math.min(failsB + 1, EXAM_HINTS_B.length - 1);
+        feedbackB.textContent = EXAM_HINTS_B[failsB];
+      }
+    }
+    function submitExam(which) {
+      if (examDone) return;
+      const input = which === 'A' ? inputA : inputB;
+      if (!input.value.trim()) return;               // rien tape : on ignore
+      if (isAmel(input.value)) {
+        examDone = true;
+        input.blur();
+        if (which === 'A') {
+          document.getElementById('grats5').textContent =
+            '"Amel" solves EVERYTHING. even math ' + '♥';
+        }
+        winExam();
+      } else {
+        input.value = '';
+        examFail(which);
+      }
+    }
+    document.getElementById('submitA').addEventListener('click', () => submitExam('A'));
+    document.getElementById('submitB').addEventListener('click', () => submitExam('B'));
+    inputA.addEventListener('keydown', e => { if (e.key === 'Enter') submitExam('A'); });
+    inputB.addEventListener('keydown', e => { if (e.key === 'Enter') submitExam('B'); });
+
+    const success5 = document.getElementById('success5');
+    function winExam() {
+      success5.hidden = false;
+      void success5.offsetWidth;
+      success5.classList.add('on');
+      const s5f = document.getElementById('success5Float');
+      for (let i = 0; i < 20; i++) setTimeout(() => spawnHeart(s5f), i * 70);
+    }
+
+    document.getElementById('claim5Btn').addEventListener('click', () => {
+      if (!rewards.includes('certificate')) {
+        rewards.push('certificate');
+        localStorage.setItem('mele-rewards', JSON.stringify(rewards));
+      }
+      // le certificat s'envole vers le sac
+      bag.hidden = false;
+      const certImg = document.getElementById('certImg');
+      const from = certImg.getBoundingClientRect();
+      const to = bag.getBoundingClientRect();
+      const clone = certImg.cloneNode();
+      clone.classList.add('fly-clone');
+      clone.style.cssText = 'position:fixed;z-index:90;image-rendering:pixelated;' +
+        'left:' + from.left + 'px;top:' + from.top + 'px;width:' + from.width + 'px;' +
+        'transition:transform .8s cubic-bezier(.45,-.25,.85,.55),opacity .8s;';
+      document.body.appendChild(clone);
+      const dx = (to.left + to.width / 2) - (from.left + from.width / 2);
+      const dy = (to.top + to.height / 2) - (from.top + from.height / 2);
+      void clone.offsetWidth;
+      clone.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(.15) rotate(25deg)';
+      clone.style.opacity = '.5';
+      success5.classList.remove('on');
+      setTimeout(() => { success5.hidden = true; }, 350);
+      stage5.classList.add('done');
+      document.getElementById('stage5Clear').hidden = false;
+      setTimeout(() => { clone.remove(); refreshBag(true); }, 830);
+    });
+
+    // continue -> stage 6 (le dernier trade)
+    const stage6 = document.getElementById('stage6');
+    document.getElementById('continue5Btn').addEventListener('click', () => {
+      stage6.hidden = false;
+      void stage6.offsetWidth;
+      stage6.classList.add('on');
+      stage5.classList.remove('on');
+      setTimeout(() => { stage5.hidden = true; }, 380);
+    });
+
+    // =====================================================================
+    // Stage 6 : le dernier trade — TOUT le contenu du sac contre LE mot
+    // de passe "molim", a envoyer a Amel sur instagram (surprise IRL).
+    // =====================================================================
+    REWARD_DEFS.password = { img: 'password.png?v=1', name: 'THE Password: "molim"' };
+    const dlg6 = document.getElementById('dlg6');
+    const dlg6Text = document.getElementById('dlg6Text');
+    const dlg6Choices = document.getElementById('dlg6Choices');
+    const merchantImg = document.getElementById('merchantImg');
+    let type6Timer = null, skip6 = null, tradeStarted = false, tradeDone = false;
+
+    // ================================================================
+    // >>> STAGE 6 - DIALOGUE DU MARCHAND : c'est ICI qu'on personnalise <<<
+    // Meme systeme que le musee : { label, next } avance ('TRADE' =
+    // accepte le deal), { label, sass } = refus (le marchand insiste
+    // puis re-propose les memes choix).
+    // ================================================================
+    const MERCHANT_DIALOGUE = {
+      start: {
+        say: 'psst. over here, kid. that is a VERY nice bag of treasures you got there...',
+        choices: [
+          { label: '...who are you ?', next: 'offer' },
+          { label: 'thanks ! I earned it all.', next: 'offer' }
+        ]
+      },
+      offer: {
+        say: 'nobody. everybody. listen : I will trade you THE SECRET PASSWORD... against EVERYTHING in your bag.',
+        choices: [
+          { label: 'deal.', next: 'TRADE' },
+          { label: 'absolutely not.', sass: 'a passport you cannot use... a CD you already heard... think about it, kid.' },
+          { label: 'what password ?', next: 'explain' }
+        ]
+      },
+      explain: {
+        say: 'ONE little word. you send it to Amel on instagram... and something GOOD happens. that is all I can say.',
+        choices: [
+          { label: 'deal.', next: 'TRADE' },
+          { label: 'hmm. suspicious.', sass: 'me ? suspicious ?? I am the most honest merchant of this entire website.' },
+          { label: 'no. my treasures.', sass: 'the offer expires... never. but STILL. tick tock, kid.' }
+        ]
+      }
+    };
+
+    function say6(text, done) {
+      clearInterval(type6Timer);
+      dlg6Choices.innerHTML = '';
+      let i = 0;
+      dlg6Text.textContent = '';
+      type6Timer = setInterval(() => {
+        i++;
+        dlg6Text.textContent = text.slice(0, i);
+        if (i >= text.length) { clearInterval(type6Timer); type6Timer = null; skip6 = null; done(); }
+      }, 24);
+      skip6 = () => {
+        clearInterval(type6Timer); type6Timer = null; skip6 = null;
+        dlg6Text.textContent = text;
+        done();
+      };
+    }
+    dlg6.addEventListener('click', e => {
+      if (e.target.closest('.dlg-btn')) return;
+      if (skip6) skip6();
+    });
+    function merchantNode(id) {
+      const n = MERCHANT_DIALOGUE[id];
+      say6(n.say, () => showMerchantChoices(n));
+    }
+    function showMerchantChoices(n) {
+      dlg6Choices.innerHTML = '';
+      n.choices.forEach(c => {
+        const b = document.createElement('button');
+        b.className = 'dlg-btn';
+        b.textContent = c.label;
+        b.addEventListener('click', () => {
+          if (c.next === 'TRADE') return doTrade();
+          if (c.next) merchantNode(c.next);
+          else say6(c.sass, () => showMerchantChoices(n));   // refus -> memes choix
+        });
+        dlg6Choices.appendChild(b);
+      });
+    }
+    // le marchand aborde Mele quand elle arrive sur le stage
+    document.getElementById('continue5Btn').addEventListener('click', () => {
+      if (tradeStarted) return;
+      tradeStarted = true;
+      setTimeout(() => { dlg6.hidden = false; merchantNode('start'); }, 700);
+    });
+
+    const success6 = document.getElementById('success6');
+    function doTrade() {
+      if (tradeDone) return;
+      tradeDone = true;
+      dlg6.hidden = true;
+      // tous les tresors s'envolent du sac vers le marchand...
+      bag.hidden = false;
+      const bagR = bag.getBoundingClientRect();
+      const mR = merchantImg.getBoundingClientRect();
+      const old = rewards.slice();
+      old.forEach((id, i) => {
+        const d = REWARD_DEFS[id];
+        if (!d) return;
+        setTimeout(() => {
+          const c = document.createElement('img');
+          c.src = d.img;
+          c.className = 'fly-clone';
+          c.style.cssText = 'position:fixed;z-index:90;image-rendering:pixelated;' +
+            'left:' + (bagR.left + 5) + 'px;top:' + (bagR.top + 5) + 'px;width:44px;' +
+            'transition:transform .75s cubic-bezier(.5,-.2,.8,.6),opacity .75s;';
+          document.body.appendChild(c);
+          const dx = (mR.left + mR.width / 2) - (bagR.left + 27);
+          const dy = (mR.top + mR.height / 2) - (bagR.top + 27);
+          void c.offsetWidth;
+          c.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(.2) rotate(-160deg)';
+          c.style.opacity = '.3';
+          setTimeout(() => c.remove(), 800);
+        }, i * 170);
+      });
+      // le sac ne contient plus que le mot de passe
+      rewards.length = 0;
+      rewards.push('password');
+      localStorage.setItem('mele-rewards', JSON.stringify(rewards));
+      bagCount.textContent = '...';
+      setTimeout(() => {
+        refreshBag(true);
+        success6.hidden = false;
+        void success6.offsetWidth;
+        success6.classList.add('on');
+        const s6f = document.getElementById('success6Float');
+        for (let i = 0; i < 20; i++) setTimeout(() => spawnHeart(s6f), i * 70);
+      }, old.length * 170 + 900);
+    }
+
+    document.getElementById('claim6Btn').addEventListener('click', () => {
+      // le parchemin s'envole vers le sac
+      const passwordImg = document.getElementById('passwordImg');
+      const from = passwordImg.getBoundingClientRect();
+      const to = bag.getBoundingClientRect();
+      const clone = passwordImg.cloneNode();
+      clone.classList.add('fly-clone');
+      clone.style.cssText = 'position:fixed;z-index:90;image-rendering:pixelated;' +
+        'left:' + from.left + 'px;top:' + from.top + 'px;width:' + from.width + 'px;' +
+        'transition:transform .8s cubic-bezier(.45,-.25,.85,.55),opacity .8s;';
+      document.body.appendChild(clone);
+      const dx = (to.left + to.width / 2) - (from.left + from.width / 2);
+      const dy = (to.top + to.height / 2) - (from.top + from.height / 2);
+      void clone.offsetWidth;
+      clone.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(.12) rotate(15deg)';
+      clone.style.opacity = '.5';
+      success6.classList.remove('on');
+      setTimeout(() => { success6.hidden = true; }, 350);
+      stage6.classList.add('done');
+      document.getElementById('stage6Clear').hidden = false;
+      setTimeout(() => { clone.remove(); refreshBag(true); }, 830);
+    });
+
+    // continue -> THE END (pluie de coeurs)
+    const finale = document.getElementById('finale');
+    document.getElementById('continue6Btn').addEventListener('click', () => {
+      finale.hidden = false;
+      void finale.offsetWidth;
+      finale.classList.add('on');
+      stage6.classList.remove('on');
+      setTimeout(() => { stage6.hidden = true; }, 380);
+      const ff = document.getElementById('finaleFloat');
+      for (let i = 0; i < 16; i++) setTimeout(() => spawnHeart(ff), i * 90);
+      setInterval(() => { if (!finale.hidden) spawnHeart(ff); }, 700);
+    });
+
+    // musique de fond : reprise automatique si déjà choisie
+    (function resumeMusic() {
+      const saved = localStorage.getItem('mele-music');
+      const t = saved && TRACKS.find(x => x.id === saved);
+      if (!t) return;
+      player.src = t.src;
+      const tryPlay = () => { player.play().catch(() => {}); };
+      tryPlay();                                        // souvent bloqué avant un geste...
+      document.addEventListener('pointerdown', tryPlay, { once: true });
+    })();
   </script>
 </body>
 </html>
